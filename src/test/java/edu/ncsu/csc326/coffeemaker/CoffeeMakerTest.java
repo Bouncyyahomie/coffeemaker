@@ -18,18 +18,18 @@
  */
 package edu.ncsu.csc326.coffeemaker;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.ncsu.csc326.coffeemaker.exceptions.InventoryException;
 import edu.ncsu.csc326.coffeemaker.exceptions.RecipeException;
 
+import static org.junit.Assert.*;
+
 /**
  * Unit tests for CoffeeMaker class.
  * 
- * @author Sarah Heckman
+ * @author Jakkrathorn Srisawad
  */
 public class CoffeeMakerTest {
 	
@@ -104,6 +104,7 @@ public class CoffeeMakerTest {
 	@Test
 	public void testAddInventory() throws InventoryException {
 		coffeeMaker.addInventory("4","7","0","9");
+		coffeeMaker.addInventory( "5", "5", "5", "5");
 	}
 	
 	/**
@@ -130,6 +131,103 @@ public class CoffeeMakerTest {
 	public void testMakeCoffee() {
 		coffeeMaker.addRecipe(recipe1);
 		assertEquals(25, coffeeMaker.makeCoffee(0, 75));
+	}
+
+	/**
+	 * Test coffee maker able to add a recipe.
+	 */
+	@Test
+	public void testAddARecipe(){
+		assertTrue(coffeeMaker.addRecipe(recipe1));
+	}
+
+	/**
+	 * Test that from the requirements only three recipes may be added to the CoffeeMaker .
+	 * */
+	@Test
+	public void testAddOnlyThreeRecipe() {
+		assertTrue(coffeeMaker.addRecipe(recipe1));
+		assertTrue(coffeeMaker.addRecipe(recipe2));
+		assertTrue(coffeeMaker.addRecipe(recipe3));
+		assertFalse(coffeeMaker.addRecipe(recipe4));
+	}
+
+	/**
+	 * Test to check coffee maker won't able to add a duplicate recipe.
+	 */
+	@Test
+	public void testAddDuplicate(){
+		assertTrue(coffeeMaker.addRecipe(recipe1));
+		assertFalse(coffeeMaker.addRecipe(recipe1));
+	}
+
+	/**
+	 * Test coffee maker can delete a recipe.
+	 */
+	@Test
+	public void testDeleteRecipe() {
+		assertTrue(coffeeMaker.addRecipe(recipe1));
+		assertEquals(recipe1.getName(), coffeeMaker.deleteRecipe(0));
+		assertNull(coffeeMaker.getRecipes()[0]);
+	}
+
+	/**
+	 * Test that coffee maker can't delete a recipe that has been deleted.
+	 */
+	@Test
+	public void testRemoveDeletedRecipe(){
+		assertTrue(coffeeMaker.addRecipe(recipe1));
+		assertEquals(recipe1.getName(), coffeeMaker.deleteRecipe(0));
+		assertNotEquals(recipe1.getName(), coffeeMaker.deleteRecipe(0));
+	}
+
+	/**
+	 * Test coffee maker can edit a recipe.
+	 */
+	@Test
+	public void  testEditRecipe(){
+		assertTrue(coffeeMaker.addRecipe(recipe1));
+		coffeeMaker.editRecipe(0, recipe2);
+		assertEquals(coffeeMaker.getRecipes()[0], recipe2);
+	}
+
+	/**
+	 * Test coffee maker can check a inventory when add inventory with well-formed quantities.
+	 */
+	@Test
+	public void testCheckInventory() throws InventoryException {
+		assertEquals("Coffee: 15\nMilk: 15\nSugar: 15\nChocolate: 15\n",coffeeMaker.checkInventory());
+		coffeeMaker.addInventory("5","5","5","5");
+		assertEquals("Coffee: 20\nMilk: 20\nSugar: 20\nChocolate: 20\n",coffeeMaker.checkInventory());
+	}
+
+	/**
+	 * Test to purchase a beverage with valid input.
+	 */
+	@Test
+	public void testPurchaseBeverage() {
+		assertTrue(coffeeMaker.addRecipe(recipe1));
+		assertEquals(50, coffeeMaker.makeCoffee(0, 100));
+		assertTrue(coffeeMaker.addRecipe(recipe3));
+		assertEquals(0, coffeeMaker.makeCoffee(1, 100));
+	}
+
+	/**
+	 * Test to purchase a beverage with not enough inventory in a coffee maker.
+	 */
+	@Test
+	public void testMakeWithNotEnoughInventory() {
+		assertTrue(coffeeMaker.addRecipe(recipe2));
+		assertEquals(100, coffeeMaker.makeCoffee(0, 100));
+	}
+
+	/**
+	 * Test purchase a beverage when user don't deposit enough money to buy a beverage.
+	 */
+	@Test
+	public void testMakeWithNotEnoughMoney(){
+		assertTrue(coffeeMaker.addRecipe(recipe3));
+		assertEquals(50, coffeeMaker.makeCoffee(0, 50));
 	}
 
 }
