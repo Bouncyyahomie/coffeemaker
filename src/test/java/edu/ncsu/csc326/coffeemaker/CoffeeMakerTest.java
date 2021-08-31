@@ -143,7 +143,7 @@ public class CoffeeMakerTest {
 
 	/**
 	 * From the requirements only three recipes may be added to the CoffeeMaker
-	 * When we add more than three recipe to coffee maker won't able to add it
+	 * When we add four different recipes to coffee maker won't able to add it
 	 * Then it will be return false.
 	 * */
 	@Test
