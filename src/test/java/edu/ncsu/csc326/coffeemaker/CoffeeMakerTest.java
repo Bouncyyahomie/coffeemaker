@@ -134,7 +134,7 @@ public class CoffeeMakerTest {
 	}
 
 	/**
-	 * Test coffee maker able to add a recipe.
+	 * Given a coffee maker with one valid recipe.
 	 */
 	@Test
 	public void testAddARecipe(){
@@ -142,7 +142,9 @@ public class CoffeeMakerTest {
 	}
 
 	/**
-	 * Test that from the requirements only three recipes may be added to the CoffeeMaker .
+	 * From the requirements only three recipes may be added to the CoffeeMaker
+	 * When we add more than three recipe to coffee maker won't able to add it
+	 * Then it will be return false.
 	 * */
 	@Test
 	public void testAddOnlyThreeRecipe() {
@@ -153,7 +155,9 @@ public class CoffeeMakerTest {
 	}
 
 	/**
-	 * Test to check coffee maker won't able to add a duplicate recipe.
+	 * Given two same name recipe
+	 * When we add duplicate name recipe to coffee maker won't able to add it because the name of recipe must be unique
+	 * Then it will be return false.
 	 */
 	@Test
 	public void testAddDuplicate(){
@@ -162,7 +166,9 @@ public class CoffeeMakerTest {
 	}
 
 	/**
-	 * Test coffee maker can delete a recipe.
+	 * Given a one valid recipe
+	 * When we try to delete a recipe
+	 * Then deleted recipe must be not show on recipe list.
 	 */
 	@Test
 	public void testDeleteRecipe() {
@@ -172,7 +178,9 @@ public class CoffeeMakerTest {
 	}
 
 	/**
-	 * Test that coffee maker can't delete a recipe that has been deleted.
+	 * Given a one valid recipe
+	 * When we already delete a recipe but want to delete it again
+	 * Then coffee maker won't able to delete a deleted recipe, so it will be return false.
 	 */
 	@Test
 	public void testRemoveDeletedRecipe(){
@@ -182,7 +190,9 @@ public class CoffeeMakerTest {
 	}
 
 	/**
-	 * Test coffee maker can edit a recipe.
+	 * Given a one valid recipe
+	 * When we edit recipe1 to recipe2
+	 * Then recipe will be a recipe2.
 	 */
 	@Test
 	public void  testEditRecipe(){
@@ -192,7 +202,8 @@ public class CoffeeMakerTest {
 	}
 
 	/**
-	 * Test coffee maker can check a inventory when add inventory with well-formed quantities.
+	 * When we add items to inventory with well-formed quantities
+	 * Then inventory should be update quantities.
 	 */
 	@Test
 	public void testCheckInventory() throws InventoryException {
@@ -202,18 +213,22 @@ public class CoffeeMakerTest {
 	}
 
 	/**
-	 * Test to purchase a beverage with valid input.
+	 * Given two valid recipe
+	 * When user try to paid a beverage with enough money
+	 * Then coffee maker will be dispensed and any change will be returned.
 	 */
 	@Test
 	public void testPurchaseBeverage() {
 		assertTrue(coffeeMaker.addRecipe(recipe1));
-		assertEquals(50, coffeeMaker.makeCoffee(0, 100));
 		assertTrue(coffeeMaker.addRecipe(recipe3));
+		assertEquals(50, coffeeMaker.makeCoffee(0, 100));
 		assertEquals(0, coffeeMaker.makeCoffee(1, 100));
 	}
 
 	/**
-	 * Test to purchase a beverage with not enough inventory in a coffee maker.
+	 * Given a one valid recipe
+	 * When user try to paid a beverage but inventory not enough
+	 * Then coffee maker won't be dispensed and user's money will be returned.
 	 */
 	@Test
 	public void testMakeWithNotEnoughInventory() {
@@ -222,7 +237,9 @@ public class CoffeeMakerTest {
 	}
 
 	/**
-	 * Test purchase a beverage when user don't deposit enough money to buy a beverage.
+	 * Given a one valid recipe
+	 * When user try to paid a beverage with not enough money
+	 * Then coffee maker won't be dispensed and user's money will be returned.
 	 */
 	@Test
 	public void testMakeWithNotEnoughMoney(){
