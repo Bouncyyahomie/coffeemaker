@@ -242,4 +242,11 @@ public class CoffeeMakerTest {
         assertEquals(50, coffeeMaker.makeCoffee(0, 50));
     }
 
+    /**
+     */
+    @Test
+    public void testMakeWithNull() {
+        assertEquals(50, coffeeMaker.makeCoffee(0, 50));
+    }
+
 }
