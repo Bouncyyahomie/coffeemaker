@@ -189,8 +189,8 @@ public class CoffeeMakerTest {
     }
 
     /**
-     * When we try to delete a recipe but doesn't have recipe to delete
-     *
+     * When we try to delete a recipe but don't have any recipe to delete
+     * Then coffee maker will return null.
      */
     @Test
     public void  testDeleteNothing() {

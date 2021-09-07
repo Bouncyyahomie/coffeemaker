@@ -145,13 +145,13 @@ public class InventoryTest{
     @Test
     public void testSetInventoryWithNegativeNumber() throws InventoryException {
         inventory.setChocolate(-1);
-        assertEquals(0, inventory.getChocolate());
+        assertEquals(15, inventory.getChocolate());
         inventory.setSugar(-1);
-        assertEquals(0, inventory.getSugar());
+        assertEquals(15, inventory.getSugar());
         inventory.setMilk(-1);
-        assertEquals(0, inventory.getMilk());
+        assertEquals(15, inventory.getMilk());
         inventory.setCoffee(-1);
-        assertEquals(0, inventory.getCoffee());
+        assertEquals(15, inventory.getCoffee());
     }
 
     /**
