@@ -189,7 +189,7 @@ public class CoffeeMakerTest {
     }
 
     /**
-     * When we try to delete a recipe but don't have any recipe in coffee maker
+     * When we try to delete a recipe but doesn't have any recipe in coffee maker
      * Then coffee maker will return null.
      */
     @Test
@@ -300,7 +300,7 @@ public class CoffeeMakerTest {
     }
 
     /**
-     * When user try to paid a beverage but no recipe in coffeemaker
+     * When user try to paid a beverage but doesn't have recipe in coffeemaker
      * Then coffee maker won't be dispensed and user's money will be returned.
      */
     @Test
