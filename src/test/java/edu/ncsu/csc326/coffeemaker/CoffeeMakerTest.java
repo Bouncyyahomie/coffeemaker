@@ -54,7 +54,7 @@ public class CoffeeMakerTest {
     public void setUp() throws RecipeException {
         coffeeMaker = new CoffeeMaker();
 
-        //Set up for r1
+        //Coffe
         recipe1 = new Recipe();
         recipe1.setName("Coffee");
         recipe1.setAmtChocolate("0");
@@ -63,7 +63,7 @@ public class CoffeeMakerTest {
         recipe1.setAmtSugar("1");
         recipe1.setPrice("50");
 
-        //Set up for r2
+        //Mocha
         recipe2 = new Recipe();
         recipe2.setName("Mocha");
         recipe2.setAmtChocolate("20");
@@ -72,7 +72,7 @@ public class CoffeeMakerTest {
         recipe2.setAmtSugar("1");
         recipe2.setPrice("75");
 
-        //Set up for r3
+        //Latte
         recipe3 = new Recipe();
         recipe3.setName("Latte");
         recipe3.setAmtChocolate("0");
@@ -81,7 +81,7 @@ public class CoffeeMakerTest {
         recipe3.setAmtSugar("1");
         recipe3.setPrice("100");
 
-        //Set up for r4
+        //Hot Chocolate
         recipe4 = new Recipe();
         recipe4.setName("Hot Chocolate");
         recipe4.setAmtChocolate("4");
@@ -189,6 +189,15 @@ public class CoffeeMakerTest {
     }
 
     /**
+     * When we try to delete a recipe but doesn't have recipe to delete
+     *
+     */
+    @Test
+    public void  testDeleteNothing() {
+        assertNull(coffeeMaker.deleteRecipe(0));
+    }
+
+    /**
      * Given a one valid recipe
      * When we edit recipe1 to recipe2
      * Then recipe will be a recipe2.
@@ -212,6 +221,9 @@ public class CoffeeMakerTest {
     /**
      * When we add items to inventory with well-formed quantities
      * Then inventory should be update quantities.
+     *
+     * @throws InventoryException if there was an error parsing the quanity
+     *                            to a positive integer.
      */
     @Test
     public void testCheckInventory() throws InventoryException {
@@ -222,12 +234,57 @@ public class CoffeeMakerTest {
 
     /**
      * Given a one valid recipe
-     * When user try to paid a beverage but inventory not enough
+     * When user try to paid a beverage but not enough chocolate
      * Then coffee maker won't be dispensed and user's money will be returned.
      */
     @Test
-    public void testMakeWithNotEnoughInventory() {
+    public void testMakeWithNotEnoughChocolate() {
         assertTrue(coffeeMaker.addRecipe(recipe2));
+        assertEquals(100, coffeeMaker.makeCoffee(0, 100));
+    }
+
+    /**
+     * Given a one valid recipe
+     * When user try to paid a beverage but not enough coffee
+     * Then coffee maker won't be dispensed and user's money will be returned.
+     *
+     * @throws RecipeException if there was an error parsing the ingredient
+     *                         amount when setting up the recipe.
+     */
+    @Test
+    public void testMakeWithNotEnoughCoffee() throws RecipeException {
+        recipe1.setAmtCoffee("20");
+        assertTrue(coffeeMaker.addRecipe(recipe1));
+        assertEquals(100, coffeeMaker.makeCoffee(0, 100));
+    }
+
+    /**
+     * Given a one valid recipe
+     * When user try to paid a beverage but not enough sugar
+     * Then coffee maker won't be dispensed and user's money will be returned.
+     *
+     * @throws RecipeException if there was an error parsing the ingredient
+     *                         amount when setting up the recipe.
+     */
+    @Test
+    public void testMakeWithNotEnoughSugar() throws RecipeException {
+        recipe3.setAmtSugar("20");
+        assertTrue(coffeeMaker.addRecipe(recipe3));
+        assertEquals(100, coffeeMaker.makeCoffee(0, 100));
+    }
+
+    /**
+     * Given a one valid recipe
+     * When user try to paid a beverage but not enough milk
+     * Then coffee maker won't be dispensed and user's money will be returned.
+     *
+     * @throws RecipeException if there was an error parsing the ingredient
+     *                           amount when setting up the recipe.
+     */
+    @Test
+    public void testMakeWithNotEnoughMilk() throws RecipeException {
+        recipe4.setAmtMilk("20");
+        assertTrue(coffeeMaker.addRecipe(recipe4));
         assertEquals(100, coffeeMaker.makeCoffee(0, 100));
     }
 
@@ -243,6 +300,8 @@ public class CoffeeMakerTest {
     }
 
     /**
+     * When user try to paid a beverage but no recipe in coffeemaker
+     * Then coffee maker won't be dispensed and user's money will be returned.
      */
     @Test
     public void testMakeWithNull() {
