@@ -24,6 +24,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Unit tests for CoffeeMaker class.
@@ -36,12 +37,17 @@ public class CoffeeMakerTest {
      * The object under test.
      */
     private CoffeeMaker coffeeMaker;
+    private CoffeeMaker mockCoffeeMaker;
+    private RecipeBook  recipeBook;
+    private Inventory   inventory;
 
     // Sample recipes to use in testing.
     private Recipe recipe1;
     private Recipe recipe2;
     private Recipe recipe3;
     private Recipe recipe4;
+
+    private Recipe[] recipesList;
 
     /**
      * Initializes some recipes to test with and the {@link CoffeeMaker}
@@ -53,6 +59,9 @@ public class CoffeeMakerTest {
     @Before
     public void setUp() throws RecipeException {
         coffeeMaker = new CoffeeMaker();
+        recipeBook = mock(RecipeBook.class);
+        inventory = new Inventory();
+        mockCoffeeMaker = new CoffeeMaker(recipeBook, inventory);
 
         //Coffe
         recipe1 = new Recipe();
@@ -89,6 +98,8 @@ public class CoffeeMakerTest {
         recipe4.setAmtMilk("1");
         recipe4.setAmtSugar("1");
         recipe4.setPrice("65");
+
+        recipesList = new Recipe[]{recipe1, recipe2, recipe3, recipe4};
     }
 
 
@@ -306,6 +317,58 @@ public class CoffeeMakerTest {
     @Test
     public void testMakeWithNull() {
         assertEquals(50, coffeeMaker.makeCoffee(0, 50));
+    }
+
+    /**
+     * Test the amount of change when paid a beverage from coffee maker
+     * Then we get the correct change back and
+     * mockito verify how many times getRecipes was invoked.
+     */
+    @Test
+    public void mockTestMakeCoffee() {
+        when(recipeBook.getRecipes()).thenReturn(recipesList);
+        assertEquals(25, mockCoffeeMaker.makeCoffee(0, 75));
+        verify(recipeBook, times(4)).getRecipes();
+    }
+
+
+    /**
+     * When user try to paid a beverage but not enough milk
+     * Then coffee maker won't be dispensed and user's money will be returned and
+     * mockito verify how many times getRecipes was invoked.
+     *
+     * @throws RecipeException
+     */
+    @Test
+    public void mockTestMakeWithNotEnoughIngredients() throws RecipeException {
+        recipe4.setAmtMilk("20");
+        when(recipeBook.getRecipes()).thenReturn(recipesList);
+        assertEquals(200, mockCoffeeMaker.makeCoffee(0, 200));
+        verify(recipeBook, times(2)).getRecipes();
+    }
+
+    /**
+     * When user try to paid a beverage with not enough money
+     * Then coffee maker won't be dispensed and user's money will be returned and
+     * mockito verify how many times getRecipes was invoked.
+     */
+    @Test
+    public void mockTestMakeWithNotEnoughMoney() {
+        when(recipeBook.getRecipes()).thenReturn(recipesList);
+        assertEquals(50, mockCoffeeMaker.makeCoffee(1, 50));
+        verify(recipeBook, times(2)).getRecipes();
+    }
+
+    /**
+     * Test to paid a beverage but doesn't have recipe in coffeemaker
+     * Then coffee maker won't be dispensed and user's money will be returned and
+     * mockito verify how many times getRecipes was invoked.
+     */
+    @Test
+    public void mockTestMakeWithNull() {
+        when(recipeBook.getRecipes()).thenReturn(new Recipe[]{null});
+        assertEquals(50, mockCoffeeMaker.makeCoffee(0, 50));
+        verify(recipeBook).getRecipes();
     }
 
 }
