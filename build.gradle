@@ -37,6 +37,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     // Deprecated.  Use testImplementation.
-//    testCompile 'junit:junit:4.12'
+    testCompile 'junit:junit:4.12'
+
+    // also use Mockito
+    testImplementation "org.mockito:mockito-core:3.+"
 }
 
