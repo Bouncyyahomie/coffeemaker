@@ -111,7 +111,7 @@ public class CoffeeMakerTest {
      * @throws InventoryException if there was an error parsing the quanity
      *                            to a positive integer.
      */
-    @Test
+    @Test(expected = InventoryException.class)
     public void testAddInventory() throws InventoryException {
         coffeeMaker.addInventory("4", "7", "0", "9");
         coffeeMaker.addInventory("5", "5", "5", "5");
@@ -236,7 +236,7 @@ public class CoffeeMakerTest {
      * @throws InventoryException if there was an error parsing the quanity
      *                            to a positive integer.
      */
-    @Test
+    @Test(expected = InventoryException.class)
     public void testCheckInventory() throws InventoryException {
         assertEquals("Coffee: 15\nMilk: 15\nSugar: 15\nChocolate: 15\n", coffeeMaker.checkInventory());
         coffeeMaker.addInventory("5", "5", "5", "5");
@@ -343,8 +343,8 @@ public class CoffeeMakerTest {
     public void mockTestMakeWithNotEnoughIngredients() throws RecipeException {
         recipe4.setAmtMilk("20");
         when(recipeBook.getRecipes()).thenReturn(recipesList);
-        assertEquals(200, mockCoffeeMaker.makeCoffee(0, 200));
-        verify(recipeBook, times(2)).getRecipes();
+        assertEquals(200, mockCoffeeMaker.makeCoffee(3, 200));
+        verify(recipeBook, times(3)).getRecipes();
     }
 
     /**
