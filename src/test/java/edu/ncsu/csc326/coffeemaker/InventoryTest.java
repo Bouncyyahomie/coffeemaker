@@ -38,7 +38,7 @@ public class InventoryTest{
      * @throws InventoryException if there was an error parsing the quanity
      *                            to a positive integer.
      */
-    @Test
+    @Test(expected = InventoryException.class)
     public void testAddChocolateWithNegativeNumber() throws InventoryException {
         inventory.addChocolate("-1");
     }
@@ -51,7 +51,7 @@ public class InventoryTest{
      * @throws InventoryException if there was an error parsing the quanity
      *                            to a positive integer.
      */
-    @Test
+    @Test(expected = InventoryException.class)
     public void testAddChocolateWithNonNumeric() throws InventoryException {
         inventory.addChocolate("ADD");
     }
@@ -64,7 +64,7 @@ public class InventoryTest{
      * @throws InventoryException if there was an error parsing the quanity
      *                            to a positive integer.
      */
-    @Test
+    @Test(expected = InventoryException.class)
     public void testAddSugarWithNegativeNumber() throws InventoryException {
         inventory.addSugar("-1");
     }
@@ -77,7 +77,7 @@ public class InventoryTest{
      * @throws InventoryException if there was an error parsing the quanity
      *                            to a positive integer.
      */
-    @Test
+    @Test(expected = InventoryException.class)
     public void testAddSugarWithNonNumeric() throws InventoryException {
         inventory.addSugar("ADD");
     }
@@ -90,7 +90,7 @@ public class InventoryTest{
      * @throws InventoryException if there was an error parsing the quanity
      *                            to a positive integer.
      */
-    @Test
+    @Test(expected = InventoryException.class)
     public void testAddMilkWithNegativeNumber() throws InventoryException {
         inventory.addMilk("-1");
     }
@@ -103,7 +103,7 @@ public class InventoryTest{
      * @throws InventoryException if there was an error parsing the quanity
      *                            to a positive integer.
      */
-    @Test
+    @Test(expected = InventoryException.class)
     public void testAddMilkWithNonNumeric() throws InventoryException {
         inventory.addMilk("ADD");
     }
@@ -116,7 +116,7 @@ public class InventoryTest{
      * @throws InventoryException if there was an error parsing the quanity
      *                            to a positive integer.
      */
-    @Test
+    @Test(expected = InventoryException.class)
     public void testAddCoffeeWithNegativeNumber() throws InventoryException {
         inventory.addCoffee("-1");
     }
@@ -129,7 +129,7 @@ public class InventoryTest{
      * @throws InventoryException if there was an error parsing the quanity
      *                            to a positive integer.
      */
-    @Test
+    @Test(expected = InventoryException.class)
     public void testAddCoffeeWithNonNumeric() throws InventoryException {
         inventory.addCoffee("ADD");
     }
@@ -142,7 +142,7 @@ public class InventoryTest{
      * @throws InventoryException if there was an error parsing the quanity
      *                            to a positive integer.
      */
-    @Test
+    @Test(expected = InventoryException.class)
     public void testSetInventoryWithNegativeNumber() throws InventoryException {
         inventory.setChocolate(-1);
         assertEquals(15, inventory.getChocolate());
@@ -162,7 +162,7 @@ public class InventoryTest{
      * @throws InventoryException if there was an error parsing the quanity
      *                            to a positive integer.
      */
-    @Test
+    @Test(expected = InventoryException.class)
     public void testSetInventoryWithPositiveNumber() throws InventoryException {
         inventory.setChocolate(5);
         assertEquals(5, inventory.getChocolate());
