@@ -9,16 +9,21 @@ Feature: The user selects a beverage and inserts an amount of money. The money m
     Given Open coffee shop
 
   Scenario: Purchase a beverage with enough money
-    When I want to purchase a beverage recipe 1
+    When I want to purchase a Coffee
     And  I deposit a coffee maker with 100 baht
     Then I get change 50 baht
 
   Scenario: Purchase a beverage with not enough money
-    When I want to purchase a beverage recipe 2
+    When I want to purchase a Latte
     And  I deposit a coffee maker with 40 baht
     Then I get change 40 baht
 
   Scenario: Purchase a beverage with not enough ingredients
-    When I want to purchase a beverage recipe 2
-    And  I deposit a coffee maker with 60 baht
-    Then I get change 60 baht
+    When I want to purchase a Mocha
+    And  I deposit a coffee maker with 75 baht
+    Then I get change 75 baht
+
+  Scenario: Purchase a beverage that doesn't exist
+    When I want to purchase a Tea
+    And  I deposit a coffee maker with 200 baht
+    Then I get change 200 baht

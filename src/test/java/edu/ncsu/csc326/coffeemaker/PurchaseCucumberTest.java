@@ -55,34 +55,36 @@ public class PurchaseCucumberTest {
         recipe3.setAmtSugar("1");
         recipe3.setPrice("100");
 
-        //Hot Chocolate
-        recipe4 = new Recipe();
-        recipe4.setName("Hot Chocolate");
-        recipe4.setAmtChocolate("4");
-        recipe4.setAmtCoffee("0");
-        recipe4.setAmtMilk("1");
-        recipe4.setAmtSugar("1");
-        recipe4.setPrice("65");
-
         coffeeMaker.addRecipe(recipe1);
         coffeeMaker.addRecipe(recipe2);
         coffeeMaker.addRecipe(recipe3);
-        coffeeMaker.addRecipe(recipe4);
     }
 
-    @When("I want to purchase a beverage recipe {int}")
-    public void i_want_to_purchase_a_beverage_recipe(int recipe) {
-        purchaseID = recipe;
+    @When("I want to purchase a {word}")
+    public void i_want_to_purchase_a_beverage_recipe(String beverage) {
+        switch (beverage){
+            case "Coffee":
+                purchaseID = 0;
+                break;
+            case "Mocha":
+                purchaseID = 1;
+                break;
+            case "Latte":
+                purchaseID = 2;
+                break;
+            default:
+                purchaseID = 3;
+        };
     }
 
-    @And("I deposit a coffee maker with {int} baht")
+    @When("I deposit a coffee maker with {int} baht")
     public void i_deposit_a_coffee_maker_with_baht(int money) {
         deposit = money;
     }
 
     @Then("I get change {int} baht")
     public void i_get_change_baht(int change) {
-        assertEquals(change, coffeeMaker.makeCoffee(purchaseID-1, deposit));
+        assertEquals(change, coffeeMaker.makeCoffee(purchaseID, deposit));
     }
 
 }
